@@ -1,0 +1,71 @@
+{
+    "$schema": "https://developer.microsoft.com/json-schemas/copilot/plugin/v2.2/schema.json",
+    "schema_version": "v2.2",
+    "name_for_human": "Copilot Robot",
+    "description_for_human": "<Please add description of the plugin>",
+    "namespace": "test10",
+    "functions": [
+        {
+            "name": "getCarImage",
+            "description": "Retrieves a JPEG snapshot from the car's camera."
+        },
+        {
+            "name": "moveCar",
+            "description": "Moves the car by accepting JSON with a direction, then forwarding form data to the Pi.",
+            "capabilities": {
+                "response_semantics": {
+                    "data_path": "$",
+                    "properties": {
+                        "title": "$.status",
+                        "subtitle": "$.message"
+                    },
+                    "static_template": {
+                        "type": "AdaptiveCard",
+                        "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+                        "version": "1.5",
+                        "body": [
+                            {
+                                "type": "TextBlock",
+                                "text": "status: ${if(status, status, 'N/A')}",
+                                "wrap": true
+                            },
+                            {
+                                "type": "TextBlock",
+                                "text": "message: ${if(message, message, 'N/A')}",
+                                "wrap": true
+                            }
+                        ]
+                    }
+                }
+            }
+        }
+    ],
+    "runtimes": [
+        {
+            "type": "OpenApi",
+            "auth": {
+                "type": "None"
+            },
+            "spec": {
+                "url": "apiSpecificationFile/openapi.yaml"
+            },
+            "run_for_functions": [
+                "getCarImage",
+                "moveCar"
+            ]
+        }
+    ],
+    "capabilities": {
+        "conversation_starters": [
+            {
+                "text": "Get the latest car image (coming soon...)"
+            },
+            {
+                "text": "Move the car forward"
+            },
+            {
+                "text": "Move the car backward"
+            }
+        ]
+    }
+}

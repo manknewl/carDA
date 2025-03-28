@@ -1,0 +1,24 @@
+{
+    "$schema": "https://developer.microsoft.com/json-schemas/copilot/declarative-agent/v1.2/schema.json",
+    "version": "v1.2",
+    "name": "Copilot Robot",
+    "description": "Copilot Robot",
+    "instructions": "$[file('instruction.txt')]",
+    "actions": [
+        {
+            "id": "action_1",
+            "file": "ai-plugin.json"
+        }
+    ],
+    "conversation_starters": [
+        {
+            "text": "Get the latest car image (coming soon...)"
+        },
+        {
+            "text": "Move the car forward"
+        },
+        {
+            "text": "Move the car backward"
+        }
+    ]
+}

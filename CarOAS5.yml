@@ -1,0 +1,56 @@
+openapi: 3.0.0
+info:
+  title: Car Control API
+  version: "1.0.0"
+
+servers:
+  - url: https://rccontrol.azurewebsites.net/
+    description: Azure Web App that transforms JSON into form data for the Pi
+
+paths:
+  /move:
+    post:
+      operationId: moveCar
+      summary: Move the car
+      description: Moves the car by accepting JSON with a direction, then forwarding form data to the Pi.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                direction:
+                  type: string
+                  enum: [forward, backward, left, right]
+                  description: Which direction to move the car
+              required:
+                - direction
+      responses:
+        '200':
+          description: "Movement command accepted"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: The status of the move command
+                  message:
+                    type: string
+                    description: Optional details
+
+  /image.jpg:
+    get:
+      operationId: getCarImage
+      summary: Get the latest car image
+      description: Retrieves a JPEG snapshot from the car's camera.
+      responses:
+        '200':
+          description: "JPEG image returned successfully"
+          content:
+            image/jpeg:
+              schema:
+                type: string
+                format: binary
